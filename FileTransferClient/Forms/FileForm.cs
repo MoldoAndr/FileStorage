@@ -359,5 +359,5 @@ namespace FileTransferClient
             }
         }
 
-    }
+    } 
 }

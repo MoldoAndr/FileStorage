@@ -1,11 +1,13 @@
-﻿using System.Net;
+﻿using System;
+using System.IO;
+using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
 
 class FileTransferServer
 {
     private const int Port = 8888;
-    public static readonly string ServerRootDirectory = @"C:\Users\Andrei\Desktop\FileTransferServer\FileTransferServer\";
+    public static readonly string ServerRootDirectory = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\.."));
     private static X509Certificate2 serverCertificate;
 
     static void Main(string[] args)

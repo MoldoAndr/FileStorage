@@ -94,4 +94,25 @@ public static class UserManager
             return builder.ToString();
         }
     }
+
+    public static bool UserExists(string username)
+    {
+        try
+        {
+            string[] lines = File.ReadAllLines(UsersFile);
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(',');
+                if (parts[0] == username)
+                {
+                    return true;
+                }
+            }
+        }
+        catch (IOException ioEx)
+        {
+            Console.WriteLine($"IO Exception while checking if user exists: {ioEx.Message}");
+        }
+        return false;
+    }
 }

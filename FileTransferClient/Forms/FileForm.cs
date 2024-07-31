@@ -40,6 +40,8 @@ namespace FileTransferClient
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.buttonShare = new System.Windows.Forms.Button();
             this.textBoxRecipient = new System.Windows.Forms.TextBox();
+            this.buttonSend = new System.Windows.Forms.Button();
+            this.textBoxSendRecipient = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
 
             this.listBoxFiles.Font = new System.Drawing.Font("Arial", 12F);
@@ -105,9 +107,28 @@ namespace FileTransferClient
             this.textBoxRecipient.Enter += new System.EventHandler(this.textBoxRecipient_Enter);
             this.textBoxRecipient.Leave += new System.EventHandler(this.textBoxRecipient_Leave);
 
+            this.buttonSend.Font = new System.Drawing.Font("Arial", 12F);
+            this.buttonSend.Location = new System.Drawing.Point(12, 460);
+            this.buttonSend.Name = "buttonSend";
+            this.buttonSend.Size = new System.Drawing.Size(180, 45);
+            this.buttonSend.TabIndex = 7;
+            this.buttonSend.Text = "Send";
+            this.buttonSend.UseVisualStyleBackColor = true;
+            this.buttonSend.Click += new System.EventHandler(this.buttonSend_Click);
+
+            this.textBoxSendRecipient.Font = new System.Drawing.Font("Arial", 12F);
+            this.textBoxSendRecipient.Location = new System.Drawing.Point(206, 470);
+            this.textBoxSendRecipient.Name = "textBoxSendRecipient";
+            this.textBoxSendRecipient.Size = new System.Drawing.Size(568, 26);
+            this.textBoxSendRecipient.TabIndex = 8;
+            this.textBoxSendRecipient.Text = "Enter recipient username for sending";
+            this.textBoxSendRecipient.ForeColor = System.Drawing.Color.Gray;
+            this.textBoxSendRecipient.Enter += new System.EventHandler(this.textBoxSendRecipient_Enter);
+            this.textBoxSendRecipient.Leave += new System.EventHandler(this.textBoxSendRecipient_Leave);
+
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 470);
+            this.ClientSize = new System.Drawing.Size(800, 520);
             this.Controls.Add(this.textBoxRecipient);
             this.Controls.Add(this.buttonShare);
             this.Controls.Add(this.buttonRefresh);
@@ -115,6 +136,8 @@ namespace FileTransferClient
             this.Controls.Add(this.buttonDownload);
             this.Controls.Add(this.buttonUpload);
             this.Controls.Add(this.listBoxFiles);
+            this.Controls.Add(this.textBoxSendRecipient);
+            this.Controls.Add(this.buttonSend);
             this.MaximizeBox = false;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FileForm";
@@ -269,7 +292,38 @@ namespace FileTransferClient
                         MessageBox.Show("Failed to share the file.", "Share Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Please enter a valid recipient username.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
 
+        private void buttonSend_Click(object sender, EventArgs e)
+        {
+            if (listBoxFiles.SelectedItem != null)
+            {
+                string fileName = listBoxFiles.SelectedItem.ToString();
+                string recipient = textBoxSendRecipient.Text.Trim();
+
+                if (!string.IsNullOrEmpty(recipient) && recipient != "Enter recipient username for sending")
+                {
+                    writer.Write("SEND");
+                    writer.Write(fileName);
+                    writer.Write(recipient);
+
+                    bool sendSuccess = reader.ReadBoolean();
+                    if (sendSuccess)
+                    {
+                        MessageBox.Show("File sent successfully.", "Send Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        UpdateFileList();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to send the file.", "Send Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
                 {
                     MessageBox.Show("Please enter a valid recipient username.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
@@ -294,6 +348,24 @@ namespace FileTransferClient
             }
         }
 
+        private void textBoxSendRecipient_Enter(object sender, EventArgs e)
+        {
+            if (textBoxSendRecipient.Text == "Enter recipient username for sending")
+            {
+                textBoxSendRecipient.Text = "";
+                textBoxSendRecipient.ForeColor = System.Drawing.Color.Black;
+            }
+        }
+
+        private void textBoxSendRecipient_Leave(object sender, EventArgs e)
+        {
+            if (textBoxSendRecipient.Text == "")
+            {
+                textBoxSendRecipient.Text = "Enter recipient username for sending";
+                textBoxSendRecipient.ForeColor = System.Drawing.Color.Gray;
+            }
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -310,5 +382,7 @@ namespace FileTransferClient
         private System.Windows.Forms.Button buttonRefresh;
         private System.Windows.Forms.Button buttonShare;
         private System.Windows.Forms.TextBox textBoxRecipient;
+        private System.Windows.Forms.Button buttonSend;
+        private System.Windows.Forms.TextBox textBoxSendRecipient;
     }
 }

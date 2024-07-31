@@ -37,6 +37,7 @@ public static class ClientHandler
                                 case "DELETE":
                                 case "LIST":
                                 case "SHARE":
+                                case "SEND":
                                     if (authenticated)
                                     {
                                         CommandHandler.HandleAuthenticatedCommand(command, reader, writer, username);

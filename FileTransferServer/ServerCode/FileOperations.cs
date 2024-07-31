@@ -130,6 +130,13 @@
             string senderFilePath = Path.Combine(senderFolder, fileName);
             string recipientFilePath = Path.Combine(recipientFolder, fileName);
 
+            if (!UserManager.UserExists(recipientUsername))
+            {
+                writer.Write(false);
+                Console.WriteLine($"Recipient user {recipientUsername} does not exist.");
+                return;
+            }
+
             if (File.Exists(senderFilePath))
             {
                 DirectoryHelper.EnsureDirectoryExists(recipientFolder);
@@ -148,6 +155,46 @@
         {
             writer.Write("SHARE_FILE_ERROR");
             Console.WriteLine($"IO Exception while sharing file: {ioEx.Message}");
+        }
+    }
+
+    public static void FileSend(BinaryReader reader, BinaryWriter writer, string username)
+    {
+        string fileName = reader.ReadString();
+        string recipientUsername = reader.ReadString();
+        Console.WriteLine($"Sending file {fileName} from {username} to {recipientUsername}.");
+        try
+        {
+            if (!UserManager.UserExists(recipientUsername))
+            {
+                writer.Write(false);
+                Console.WriteLine($"Recipient user {recipientUsername} does not exist.");
+                return;
+            }
+
+            string senderFolder = UserManager.GetUserFolder(username);
+            string recipientFolder = UserManager.GetUserFolder(recipientUsername);
+            string senderFilePath = Path.Combine(senderFolder, fileName);
+            string recipientFilePath = Path.Combine(recipientFolder, fileName);
+
+            if (File.Exists(senderFilePath))
+            {
+                DirectoryHelper.EnsureDirectoryExists(recipientFolder);
+                File.Copy(senderFilePath, recipientFilePath, overwrite: true);
+                File.Delete(senderFilePath);
+                writer.Write(true);
+                Console.WriteLine($"File {fileName} sent successfully to {recipientUsername} and deleted from {username}'s folder.");
+            }
+            else
+            {
+                writer.Write(false);
+                Console.WriteLine($"File {fileName} not found in {username}'s folder.");
+            }
+        }
+        catch (IOException ioEx)
+        {
+            writer.Write(false);
+            Console.WriteLine($"IO Exception while sending file: {ioEx.Message}");
         }
     }
 }

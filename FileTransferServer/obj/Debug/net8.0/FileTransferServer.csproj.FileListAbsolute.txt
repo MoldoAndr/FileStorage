@@ -26,3 +26,4 @@ C:\Users\Andrei\Desktop\FileTransferServer\FileTransferServer\obj\Debug\net8.0\r
 C:\Users\Andrei\Desktop\FileTransferServer\FileTransferServer\obj\Debug\net8.0\FileTransferServer.pdb
 C:\Users\Andrei\Desktop\FileTransferServer\FileTransferServer\obj\Debug\net8.0\FileTransferServer.genruntimeconfig.cache
 C:\Users\Andrei\Desktop\FileTransferServer\FileTransferServer\obj\Debug\net8.0\ref\FileTransferServer.dll
+C:\Users\Andrei\Desktop\FileTransferServer\FileTransferServer\obj\Debug\net8.0\FileTransferServer.sourcelink.json

@@ -22,6 +22,9 @@
                 case "SHARE":
                     FileOperations.ShareFile(reader, writer, username);
                     break;
+                case "SEND":
+                    FileOperations.FileSend(reader, writer, username);
+                    break;
                 default:
                     writer.Write("INVALID_COMMAND");
                     Console.WriteLine($"Invalid authenticated command received: {command}");

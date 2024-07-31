@@ -137,23 +137,33 @@
                 return;
             }
 
-            if (File.Exists(senderFilePath))
+            RetryFileOperation(() =>
             {
-                DirectoryHelper.EnsureDirectoryExists(recipientFolder);
-
-                File.Copy(senderFilePath, recipientFilePath, overwrite: true);
-                writer.Write("FILE_SHARED_SUCCESSFULLY");
-                Console.WriteLine($"File {fileName} shared successfully to {recipientUsername}.");
-            }
-            else
-            {
-                writer.Write("FILE_NOT_FOUND");
-                Console.WriteLine($"File {fileName} not found in {username}'s folder.");
-            }
+                if (File.Exists(senderFilePath))
+                {
+                    if (File.Exists(recipientFilePath))
+                    {
+                        writer.Write(false);
+                        Console.WriteLine($"File {fileName} already exists in {recipientUsername}'s folder.");
+                    }
+                    else
+                    {
+                        DirectoryHelper.EnsureDirectoryExists(recipientFolder);
+                        File.Copy(senderFilePath, recipientFilePath, overwrite: true);
+                        writer.Write(true);
+                        Console.WriteLine($"File {fileName} shared successfully to {recipientUsername}.");
+                    }
+                }
+                else
+                {
+                    writer.Write(false);
+                    Console.WriteLine($"File {fileName} not found in {username}'s folder.");
+                }
+            });
         }
         catch (IOException ioEx)
         {
-            writer.Write("SHARE_FILE_ERROR");
+            writer.Write(false);
             Console.WriteLine($"IO Exception while sharing file: {ioEx.Message}");
         }
     }
@@ -177,19 +187,30 @@
             string senderFilePath = Path.Combine(senderFolder, fileName);
             string recipientFilePath = Path.Combine(recipientFolder, fileName);
 
-            if (File.Exists(senderFilePath))
+            RetryFileOperation(() =>
             {
-                DirectoryHelper.EnsureDirectoryExists(recipientFolder);
-                File.Copy(senderFilePath, recipientFilePath, overwrite: true);
-                File.Delete(senderFilePath);
-                writer.Write(true);
-                Console.WriteLine($"File {fileName} sent successfully to {recipientUsername} and deleted from {username}'s folder.");
-            }
-            else
-            {
-                writer.Write(false);
-                Console.WriteLine($"File {fileName} not found in {username}'s folder.");
-            }
+                if (File.Exists(senderFilePath))
+                {
+                    if (File.Exists(recipientFilePath))
+                    {
+                        writer.Write(false);
+                        Console.WriteLine($"File {fileName} already exists in {recipientUsername}'s folder.");
+                    }
+                    else
+                    {
+                        DirectoryHelper.EnsureDirectoryExists(recipientFolder);
+                        File.Copy(senderFilePath, recipientFilePath, overwrite: true);
+                        File.Delete(senderFilePath);
+                        writer.Write(true);
+                        Console.WriteLine($"File {fileName} sent successfully to {recipientUsername} and deleted from {username}'s folder.");
+                    }
+                }
+                else
+                {
+                    writer.Write(false);
+                    Console.WriteLine($"File {fileName} not found in {username}'s folder.");
+                }
+            });
         }
         catch (IOException ioEx)
         {
@@ -197,4 +218,27 @@
             Console.WriteLine($"IO Exception while sending file: {ioEx.Message}");
         }
     }
+
+
+    private static void RetryFileOperation(Action fileOperation, int maxRetries = 5, int delayBetweenRetries = 1000)
+    {
+        for (int attempt = 1; attempt <= maxRetries; attempt++)
+        {
+            try
+            {
+                fileOperation();
+                return;
+            }
+            catch (IOException ioEx)
+            {
+                if (attempt == maxRetries)
+                {
+                    throw;
+                }
+                Console.WriteLine($"IO Exception: {ioEx.Message}. Retrying in {delayBetweenRetries}ms...");
+                System.Threading.Thread.Sleep(delayBetweenRetries);
+            }
+        }
+    }
+
 }

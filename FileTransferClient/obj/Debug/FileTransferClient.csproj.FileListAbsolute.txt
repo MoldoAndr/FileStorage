@@ -18,3 +18,13 @@ C:\Users\Andrei\Desktop\FileTransferServer\FileTransferClient\obj\Debug\FileTran
 C:\Users\Andrei\Desktop\FileTransferServer\FileTransferClient\obj\Debug\FileTransferClient.csproj.CoreCompileInputs.cache
 C:\Users\Andrei\Desktop\FileTransferServer\FileTransferClient\obj\Debug\FileTransferClient.exe
 C:\Users\Andrei\Desktop\FileTransferServer\FileTransferClient\obj\Debug\FileTransferClient.pdb
+C:\Users\Andrei\Desktop\FileTransfer\FileTransferClient\bin\Debug\FileTransferClient.exe.config
+C:\Users\Andrei\Desktop\FileTransfer\FileTransferClient\bin\Debug\FileTransferClient.exe
+C:\Users\Andrei\Desktop\FileTransfer\FileTransferClient\bin\Debug\FileTransferClient.pdb
+C:\Users\Andrei\Desktop\FileTransfer\FileTransferClient\obj\Debug\FileTransferClient.csproj.AssemblyReference.cache
+C:\Users\Andrei\Desktop\FileTransfer\FileTransferClient\obj\Debug\FileTransferClient.FileForm.resources
+C:\Users\Andrei\Desktop\FileTransfer\FileTransferClient\obj\Debug\FileTransferClient.Properties.Resources.resources
+C:\Users\Andrei\Desktop\FileTransfer\FileTransferClient\obj\Debug\FileTransferClient.csproj.GenerateResource.cache
+C:\Users\Andrei\Desktop\FileTransfer\FileTransferClient\obj\Debug\FileTransferClient.csproj.CoreCompileInputs.cache
+C:\Users\Andrei\Desktop\FileTransfer\FileTransferClient\obj\Debug\FileTransferClient.exe
+C:\Users\Andrei\Desktop\FileTransfer\FileTransferClient\obj\Debug\FileTransferClient.pdb

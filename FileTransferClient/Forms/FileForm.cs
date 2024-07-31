@@ -16,119 +16,67 @@ namespace FileTransferClient
         private BinaryReader reader;
         private BinaryWriter writer;
 
+        private System.Windows.Forms.ListBox listBoxFiles;
+        private System.Windows.Forms.Button buttonUpload;
+        private System.Windows.Forms.Button buttonDownload;
+        private System.Windows.Forms.Button buttonDelete;
+        private System.Windows.Forms.Button buttonRefresh;
+        private System.Windows.Forms.Button buttonShare;
+        private System.Windows.Forms.TextBox textBoxRecipient;
+        private System.Windows.Forms.Button buttonSend;
+        private System.Windows.Forms.TextBox textBoxSendRecipient;
+        private System.Windows.Forms.Panel panelTop;
+        private System.Windows.Forms.Label labelTitle;
+
         public FileForm()
         {
             InitializeComponent();
             ConnectToServer();
         }
 
-        public FileForm(SslStream sslStream, BinaryReader reader, BinaryWriter writer)
-        {
-            InitializeComponent();
-            this.sslStream = sslStream;
-            this.reader = reader;
-            this.writer = writer;
-            UpdateFileList();
-        }
-
         private void InitializeComponent()
         {
-            this.listBoxFiles = new System.Windows.Forms.ListBox();
-            this.buttonUpload = new System.Windows.Forms.Button();
-            this.buttonDownload = new System.Windows.Forms.Button();
-            this.buttonDelete = new System.Windows.Forms.Button();
-            this.buttonRefresh = new System.Windows.Forms.Button();
-            this.buttonShare = new System.Windows.Forms.Button();
-            this.textBoxRecipient = new System.Windows.Forms.TextBox();
-            this.buttonSend = new System.Windows.Forms.Button();
-            this.textBoxSendRecipient = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
 
-            this.listBoxFiles.Font = new System.Drawing.Font("Arial", 12F);
+            this.panelTop = new System.Windows.Forms.Panel();
+            this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelTop.Height = 60;
+            this.panelTop.BackColor = Color.FromArgb(44, 62, 80);
+
+            this.labelTitle = new System.Windows.Forms.Label();
+            this.labelTitle.Text = "File Transfer Client";
+            this.labelTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.labelTitle.ForeColor = Color.FromArgb(236, 240, 241);
+            this.labelTitle.Location = new System.Drawing.Point(20, 10);
+            this.labelTitle.AutoSize = true;
+            this.panelTop.Controls.Add(this.labelTitle);
+
+            this.listBoxFiles = new System.Windows.Forms.ListBox();
+            this.listBoxFiles.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.listBoxFiles.FormattingEnabled = true;
-            this.listBoxFiles.ItemHeight = 30;
-            this.listBoxFiles.Location = new System.Drawing.Point(12, 12);
+            this.listBoxFiles.ItemHeight = 25;
+            this.listBoxFiles.Location = new System.Drawing.Point(20, 80);
             this.listBoxFiles.Name = "listBoxFiles";
-            this.listBoxFiles.Size = new System.Drawing.Size(776, 340);
+            this.listBoxFiles.Size = new System.Drawing.Size(760, 300);
             this.listBoxFiles.TabIndex = 0;
+            this.listBoxFiles.BackColor = Color.FromArgb(52, 73, 94);
+            this.listBoxFiles.ForeColor = Color.FromArgb(236, 240, 241);
+            this.listBoxFiles.BorderStyle = BorderStyle.None;
 
-            this.buttonUpload.Font = new System.Drawing.Font("Arial", 12F);
-            this.buttonUpload.Location = new System.Drawing.Point(12, 358);
-            this.buttonUpload.Name = "buttonUpload";
-            this.buttonUpload.Size = new System.Drawing.Size(180, 45);
-            this.buttonUpload.TabIndex = 1;
-            this.buttonUpload.Text = "Upload";
-            this.buttonUpload.UseVisualStyleBackColor = true;
-            this.buttonUpload.Click += new System.EventHandler(this.buttonUpload_Click);
+            this.buttonUpload = CreateStyledButton("Upload", 20, 400);
+            this.buttonDownload = CreateStyledButton("Download", 210, 400);
+            this.buttonDelete = CreateStyledButton("Delete", 400, 400);
+            this.buttonRefresh = CreateStyledButton("Refresh", 590, 400);
+            this.buttonShare = CreateStyledButton("Share", 20, 460);
+            this.buttonSend = CreateStyledButton("Send", 20, 520);
 
-            this.buttonDownload.Font = new System.Drawing.Font("Arial", 12F);
-            this.buttonDownload.Location = new System.Drawing.Point(206, 358);
-            this.buttonDownload.Name = "buttonDownload";
-            this.buttonDownload.Size = new System.Drawing.Size(180, 45);
-            this.buttonDownload.TabIndex = 2;
-            this.buttonDownload.Text = "Download";
-            this.buttonDownload.UseVisualStyleBackColor = true;
-            this.buttonDownload.Click += new System.EventHandler(this.buttonDownload_Click);
+            this.textBoxRecipient = CreateStyledTextBox("Enter recipient username", 210, 470);
+            this.textBoxSendRecipient = CreateStyledTextBox("Enter recipient username for sending", 210, 530);
 
-            this.buttonDelete.Font = new System.Drawing.Font("Arial", 12F);
-            this.buttonDelete.Location = new System.Drawing.Point(400, 358);
-            this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(180, 45);
-            this.buttonDelete.TabIndex = 3;
-            this.buttonDelete.Text = "Delete";
-            this.buttonDelete.UseVisualStyleBackColor = true;
-            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
-
-            this.buttonRefresh.Font = new System.Drawing.Font("Arial", 12F);
-            this.buttonRefresh.Location = new System.Drawing.Point(594, 358);
-            this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(180, 45);
-            this.buttonRefresh.TabIndex = 4;
-            this.buttonRefresh.Text = "Refresh";
-            this.buttonRefresh.UseVisualStyleBackColor = true;
-            this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
-
-            this.buttonShare.Font = new System.Drawing.Font("Arial", 12F);
-            this.buttonShare.Location = new System.Drawing.Point(12, 409);
-            this.buttonShare.Name = "buttonShare";
-            this.buttonShare.Size = new System.Drawing.Size(180, 45);
-            this.buttonShare.TabIndex = 5;
-            this.buttonShare.Text = "Share";
-            this.buttonShare.UseVisualStyleBackColor = true;
-            this.buttonShare.Click += new System.EventHandler(this.buttonShare_Click);
-
-            this.textBoxRecipient.Font = new System.Drawing.Font("Arial", 12F);
-            this.textBoxRecipient.Location = new System.Drawing.Point(206, 419);
-            this.textBoxRecipient.Name = "textBoxRecipient";
-            this.textBoxRecipient.Size = new System.Drawing.Size(568, 26);
-            this.textBoxRecipient.TabIndex = 6;
-            this.textBoxRecipient.Text = "Enter recipient username";
-            this.textBoxRecipient.ForeColor = System.Drawing.Color.Gray;
-            this.textBoxRecipient.Enter += new System.EventHandler(this.textBoxRecipient_Enter);
-            this.textBoxRecipient.Leave += new System.EventHandler(this.textBoxRecipient_Leave);
-
-            this.buttonSend.Font = new System.Drawing.Font("Arial", 12F);
-            this.buttonSend.Location = new System.Drawing.Point(12, 460);
-            this.buttonSend.Name = "buttonSend";
-            this.buttonSend.Size = new System.Drawing.Size(180, 45);
-            this.buttonSend.TabIndex = 7;
-            this.buttonSend.Text = "Send";
-            this.buttonSend.UseVisualStyleBackColor = true;
-            this.buttonSend.Click += new System.EventHandler(this.buttonSend_Click);
-
-            this.textBoxSendRecipient.Font = new System.Drawing.Font("Arial", 12F);
-            this.textBoxSendRecipient.Location = new System.Drawing.Point(206, 470);
-            this.textBoxSendRecipient.Name = "textBoxSendRecipient";
-            this.textBoxSendRecipient.Size = new System.Drawing.Size(568, 26);
-            this.textBoxSendRecipient.TabIndex = 8;
-            this.textBoxSendRecipient.Text = "Enter recipient username for sending";
-            this.textBoxSendRecipient.ForeColor = System.Drawing.Color.Gray;
-            this.textBoxSendRecipient.Enter += new System.EventHandler(this.textBoxSendRecipient_Enter);
-            this.textBoxSendRecipient.Leave += new System.EventHandler(this.textBoxSendRecipient_Leave);
-
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 520);
+            this.ClientSize = new System.Drawing.Size(800, 600);
+            this.Controls.Add(this.panelTop);
             this.Controls.Add(this.textBoxRecipient);
             this.Controls.Add(this.buttonShare);
             this.Controls.Add(this.buttonRefresh);
@@ -143,8 +91,89 @@ namespace FileTransferClient
             this.Name = "FileForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "File Transfer Client";
+            this.BackColor = Color.FromArgb(34, 47, 62);
             this.ResumeLayout(false);
             this.PerformLayout();
+        }
+
+        private Button CreateStyledButton(string text, int x, int y)
+        {
+            Button button = new Button();
+            button.Text = text;
+            button.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            button.Location = new Point(x, y);
+            button.Size = new Size(170, 40);
+            button.FlatStyle = FlatStyle.Flat;
+            button.FlatAppearance.BorderSize = 0;
+            button.BackColor = Color.FromArgb(41, 128, 185);
+            button.ForeColor = Color.FromArgb(236, 240, 241);
+            button.Cursor = Cursors.Hand;
+            button.Click += GetButtonClickHandler(text);
+            return button;
+        }
+
+        private TextBox CreateStyledTextBox(string placeholder, int x, int y)
+        {
+            TextBox textBox = new TextBox();
+            textBox.Font = new Font("Segoe UI", 11F);
+            textBox.Location = new Point(x, y);
+            textBox.Size = new Size(570, 30);
+            textBox.Text = placeholder;
+            textBox.ForeColor = Color.Gray;
+            textBox.BackColor = Color.FromArgb(52, 73, 94); 
+            textBox.Enter += (sender, e) => TextBox_Enter(sender, e, placeholder);
+            textBox.Leave += (sender, e) => TextBox_Leave(sender, e, placeholder);
+            return textBox;
+        }
+
+        private void TextBox_Enter(object sender, EventArgs e, string placeholder)
+        {
+            if (((TextBox)sender).Text == placeholder)
+            {
+                ((TextBox)sender).Text = "";
+                ((TextBox)sender).ForeColor = Color.FromArgb(236, 240, 241);
+            }
+        }
+
+        private void TextBox_Leave(object sender, EventArgs e, string placeholder)
+        {
+            if (string.IsNullOrWhiteSpace(((TextBox)sender).Text))
+            {
+                ((TextBox)sender).Text = placeholder;
+                ((TextBox)sender).ForeColor = Color.Gray;
+            }
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            using (LinearGradientBrush brush = new LinearGradientBrush(this.ClientRectangle, Color.FromArgb(44, 62, 80), Color.FromArgb(52, 73, 94), 90F))
+            {
+                e.Graphics.FillRectangle(brush, this.ClientRectangle);
+            }
+        }
+
+        public FileForm(SslStream sslStream, BinaryReader reader, BinaryWriter writer)
+        {
+            InitializeComponent();
+            this.sslStream = sslStream;
+            this.reader = reader;
+            this.writer = writer;
+            UpdateFileList();
+        }
+
+        private EventHandler GetButtonClickHandler(string buttonText)
+        {
+            switch (buttonText)
+            {
+                case "Upload": return buttonUpload_Click;
+                case "Download": return buttonDownload_Click;
+                case "Delete": return buttonDelete_Click;
+                case "Refresh": return buttonRefresh_Click;
+                case "Share": return buttonShare_Click;
+                case "Send": return buttonSend_Click;
+                default: return null;
+            }
         }
 
         private void ConnectToServer()
@@ -330,59 +359,5 @@ namespace FileTransferClient
             }
         }
 
-        private void textBoxRecipient_Enter(object sender, EventArgs e)
-        {
-            if (textBoxRecipient.Text == "Enter recipient username")
-            {
-                textBoxRecipient.Text = "";
-                textBoxRecipient.ForeColor = System.Drawing.Color.Black;
-            }
-        }
-
-        private void textBoxRecipient_Leave(object sender, EventArgs e)
-        {
-            if (textBoxRecipient.Text == "")
-            {
-                textBoxRecipient.Text = "Enter recipient username";
-                textBoxRecipient.ForeColor = System.Drawing.Color.Gray;
-            }
-        }
-
-        private void textBoxSendRecipient_Enter(object sender, EventArgs e)
-        {
-            if (textBoxSendRecipient.Text == "Enter recipient username for sending")
-            {
-                textBoxSendRecipient.Text = "";
-                textBoxSendRecipient.ForeColor = System.Drawing.Color.Black;
-            }
-        }
-
-        private void textBoxSendRecipient_Leave(object sender, EventArgs e)
-        {
-            if (textBoxSendRecipient.Text == "")
-            {
-                textBoxSendRecipient.Text = "Enter recipient username for sending";
-                textBoxSendRecipient.ForeColor = System.Drawing.Color.Gray;
-            }
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-            using (LinearGradientBrush brush = new LinearGradientBrush(this.ClientRectangle, Color.DarkBlue, Color.SteelBlue, 90F))
-            {
-                e.Graphics.FillRectangle(brush, this.ClientRectangle);
-            }
-        }
-
-        private System.Windows.Forms.ListBox listBoxFiles;
-        private System.Windows.Forms.Button buttonUpload;
-        private System.Windows.Forms.Button buttonDownload;
-        private System.Windows.Forms.Button buttonDelete;
-        private System.Windows.Forms.Button buttonRefresh;
-        private System.Windows.Forms.Button buttonShare;
-        private System.Windows.Forms.TextBox textBoxRecipient;
-        private System.Windows.Forms.Button buttonSend;
-        private System.Windows.Forms.TextBox textBoxSendRecipient;
     }
 }

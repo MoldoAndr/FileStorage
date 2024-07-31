@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing.Drawing2D;
+using System.Drawing;
 using System.IO;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
@@ -15,69 +17,101 @@ namespace FileTransferClient
         public string Username { get; private set; }
         public string Password { get; private set; }
 
+        private Button btnMinimize;
+        private Button btnClose;
+
         public SignupForm()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Paint += new PaintEventHandler(SetBackgroundGradient);
+            AddPlaceholderText();
         }
 
         private void InitializeComponent()
         {
-            this.txtUsername = new System.Windows.Forms.TextBox();
-            this.txtPassword = new System.Windows.Forms.TextBox();
-            this.btnSignup = new System.Windows.Forms.Button();
+            this.txtUsername = new CustomTextBox();
+            this.txtPassword = new CustomTextBox();
+            this.btnSignup = new CustomButton();
+            this.btnMinimize = new Button();
+            this.btnClose = new Button();
+
             this.SuspendLayout();
 
-            this.txtUsername.Location = new System.Drawing.Point(20, 20);
+            this.txtUsername.Location = new Point(20, 80);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(640, 60);
+            this.txtUsername.Size = new Size(640, 60);
             this.txtUsername.TabIndex = 0;
             this.txtUsername.Text = "Username";
-            this.txtUsername.ForeColor = System.Drawing.Color.Gray;
-            this.txtUsername.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic);
-            this.txtUsername.Enter += new System.EventHandler(this.textBox_Enter);
-            this.txtUsername.Leave += new System.EventHandler(this.textBox_Leave);
+            this.txtUsername.Enter += new EventHandler(this.TextBox_Enter);
+            this.txtUsername.Leave += new EventHandler(this.TextBox_Leave);
 
-            this.txtPassword.Location = new System.Drawing.Point(20, 60);
+            this.txtPassword.Location = new Point(20, 150);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(640, 60);
+            this.txtPassword.Size = new Size(640, 60);
             this.txtPassword.TabIndex = 1;
             this.txtPassword.Text = "Password";
-            this.txtPassword.ForeColor = System.Drawing.Color.Gray;
-            this.txtPassword.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic);
-            this.txtPassword.PasswordChar = '\0';
-            this.txtPassword.Enter += new System.EventHandler(this.textBox_Enter);
-            this.txtPassword.Leave += new System.EventHandler(this.textBox_Leave);
+            this.txtPassword.PasswordChar = '*';
+            this.txtPassword.Enter += new EventHandler(this.TextBox_Enter);
+            this.txtPassword.Leave += new EventHandler(this.TextBox_Leave);
 
-            this.btnSignup.Location = new System.Drawing.Point(20, 100);
+            this.btnSignup.Location = new Point(20, 220);
             this.btnSignup.Name = "btnSignup";
-            this.btnSignup.Size = new System.Drawing.Size(640, 80);
+            this.btnSignup.Size = new Size(640, 80);
             this.btnSignup.TabIndex = 2;
             this.btnSignup.Text = "Signup";
-            this.btnSignup.UseVisualStyleBackColor = true;
-            this.btnSignup.BackColor = System.Drawing.Color.FromArgb(9, 27, 84);
-            this.btnSignup.ForeColor = System.Drawing.Color.White;
-            this.btnSignup.Font = new System.Drawing.Font("Arial", 12F);
-            this.btnSignup.Click += new System.EventHandler(this.btnSignup_Click);
+            this.btnSignup.Click += new EventHandler(this.BtnSignup_Click);
 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(680, 200);
+            this.btnMinimize.Size = new Size(30, 30);
+            this.btnMinimize.Location = new Point(620, 10);
+            this.btnMinimize.FlatStyle = FlatStyle.Flat;
+            this.btnMinimize.FlatAppearance.BorderSize = 0;
+            this.btnMinimize.Text = "—";
+            this.btnMinimize.Font = new Font("Arial", 12F, FontStyle.Bold);
+            this.btnMinimize.ForeColor = Color.White;
+            this.btnMinimize.BackColor = Color.Transparent;
+            this.btnMinimize.Click += new EventHandler(BtnMinimize_Click);
+
+            this.btnClose.Size = new Size(30, 30);
+            this.btnClose.Location = new Point(650, 10);
+            this.btnClose.FlatStyle = FlatStyle.Flat;
+            this.btnClose.FlatAppearance.BorderSize = 0;
+            this.btnClose.Text = "×";
+            this.btnClose.Font = new Font("Arial", 12F, FontStyle.Bold);
+            this.btnClose.ForeColor = Color.White;
+            this.btnClose.BackColor = Color.Transparent;
+            this.btnClose.Click += new EventHandler(BtnClose_Click);
+
+            this.AutoScaleDimensions = new SizeF(9F, 18F);
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.ClientSize = new Size(680, 350);
             this.Controls.Add(this.btnSignup);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUsername);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            this.Controls.Add(this.btnMinimize);
+            this.Controls.Add(this.btnClose);
+            this.FormBorderStyle = FormBorderStyle.None;
             this.Name = "SignupForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Signup";
-            this.BackColor = System.Drawing.Color.FromArgb(2, 8, 28);
-            this.ForeColor = System.Drawing.Color.White;
+            this.BackColor = Color.FromArgb(2, 8, 28);
+            this.ForeColor = Color.White;
             this.ResumeLayout(false);
             this.PerformLayout();
         }
 
-        private void btnSignup_Click(object sender, EventArgs e)
+        private void SetBackgroundGradient(object sender, PaintEventArgs e)
+        {
+            using (LinearGradientBrush brush = new LinearGradientBrush(this.ClientRectangle,
+                                                                       Color.FromArgb(2, 8, 28),
+                                                                       Color.FromArgb(22, 33, 62),
+                                                                       90F))
+            {
+                e.Graphics.FillRectangle(brush, this.ClientRectangle);
+            }
+        }
+
+        private void BtnSignup_Click(object sender, EventArgs e)
         {
             Username = txtUsername.Text;
             Password = txtPassword.Text;
@@ -134,14 +168,23 @@ namespace FileTransferClient
             return true;
         }
 
-        private void textBox_Enter(object sender, EventArgs e)
+        private void AddPlaceholderText()
+        {
+            txtUsername.Text = "Username";
+            txtUsername.ForeColor = Color.White;
+
+            txtPassword.Text = "Password";
+            txtPassword.ForeColor = Color.White;
+            txtPassword.PasswordChar = '\0';
+        }
+
+        private void TextBox_Enter(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            if (textBox.ForeColor == System.Drawing.Color.Gray)
+            if (textBox.ForeColor == Color.White)
             {
                 textBox.Text = "";
-                textBox.ForeColor = System.Drawing.Color.Black;
-                textBox.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular);
+                textBox.Font = new Font("Arial", 16F);
                 if (textBox == txtPassword)
                 {
                     textBox.PasswordChar = '*';
@@ -149,7 +192,7 @@ namespace FileTransferClient
             }
         }
 
-        private void textBox_Leave(object sender, EventArgs e)
+        private void TextBox_Leave(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
             if (string.IsNullOrWhiteSpace(textBox.Text))
@@ -163,8 +206,8 @@ namespace FileTransferClient
                     textBox.Text = "Password";
                     textBox.PasswordChar = '\0';
                 }
-                textBox.ForeColor = System.Drawing.Color.Gray;
-                textBox.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic);
+                textBox.ForeColor = Color.White;
+                textBox.Font = new Font("Arial", 16F, FontStyle.Italic);
             }
         }
 
@@ -173,6 +216,16 @@ namespace FileTransferClient
             writer?.Close();
             reader?.Close();
             sslStream?.Close();
+        }
+
+        private void BtnMinimize_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void BtnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         protected override void Dispose(bool disposing)
@@ -184,8 +237,8 @@ namespace FileTransferClient
             base.Dispose(disposing);
         }
 
-        private System.Windows.Forms.TextBox txtUsername;
-        private System.Windows.Forms.TextBox txtPassword;
-        private System.Windows.Forms.Button btnSignup;
+        private CustomTextBox txtUsername;
+        private CustomTextBox txtPassword;
+        private CustomButton btnSignup;
     }
 }

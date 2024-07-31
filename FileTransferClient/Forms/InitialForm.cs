@@ -47,7 +47,6 @@ namespace FileTransferClient
             this.btnSignup = new CustomButton();
             this.logoPanel = new Panel();
             this.titleBar = new Panel();
-            this.btnMinimize = new Button();
             this.btnClose = new Button();
             this.SuspendLayout();
 
@@ -55,16 +54,6 @@ namespace FileTransferClient
             this.titleBar.Location = new Point(0, 0);
             this.titleBar.BackColor = Color.FromArgb(1, 4, 14);
             this.titleBar.MouseDown += new MouseEventHandler(TitleBar_MouseDown);
-
-            this.btnMinimize.Size = new Size(30, 30);
-            this.btnMinimize.Location = new Point(740, 0);
-            this.btnMinimize.FlatStyle = FlatStyle.Flat;
-            this.btnMinimize.FlatAppearance.BorderSize = 0;
-            this.btnMinimize.Text = "—";
-            this.btnMinimize.Font = new Font("Arial", 12F, FontStyle.Bold);
-            this.btnMinimize.ForeColor = Color.White;
-            this.btnMinimize.BackColor = Color.Transparent;
-            this.btnMinimize.Click += new EventHandler(BtnMinimize_Click);
 
             this.btnClose.Size = new Size(30, 30);
             this.btnClose.Location = new Point(770, 0);
@@ -99,7 +88,6 @@ namespace FileTransferClient
             this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new Size(800, 520);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.btnMinimize);
             this.Controls.Add(this.titleBar);
             this.Controls.Add(this.logoPanel);
             this.Controls.Add(this.btnSignup);
@@ -148,11 +136,6 @@ namespace FileTransferClient
             }
         }
 
-        private void BtnMinimize_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
-
         private void BtnClose_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -170,7 +153,6 @@ namespace FileTransferClient
         private CustomButton btnSignup;
         private Panel logoPanel;
         private Panel titleBar;
-        private Button btnMinimize;
         private Button btnClose;
     }
 

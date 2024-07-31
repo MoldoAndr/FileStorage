@@ -16,7 +16,6 @@ namespace FileTransferClient
         public string Username { get; set; }
         public string Password { get; set; }
 
-        private Button btnMinimize;
         private Button btnClose;
 
         public LoginForm()
@@ -40,7 +39,6 @@ namespace FileTransferClient
             this.textBoxUsername = new CustomTextBox();
             this.textBoxPassword = new CustomTextBox();
             this.buttonLogin = new CustomButton();
-            this.btnMinimize = new Button();
             this.btnClose = new Button();
 
             this.SuspendLayout();
@@ -69,16 +67,6 @@ namespace FileTransferClient
             this.buttonLogin.Text = "Login";
             this.buttonLogin.Click += new EventHandler(this.ButtonLogin_Click);
 
-            this.btnMinimize.Size = new Size(30, 30);
-            this.btnMinimize.Location = new Point(620, 10);
-            this.btnMinimize.FlatStyle = FlatStyle.Flat;
-            this.btnMinimize.FlatAppearance.BorderSize = 0;
-            this.btnMinimize.Text = "—";
-            this.btnMinimize.Font = new Font("Arial", 12F, FontStyle.Bold);
-            this.btnMinimize.ForeColor = Color.White;
-            this.btnMinimize.BackColor = Color.Transparent;
-            this.btnMinimize.Click += new EventHandler(BtnMinimize_Click);
-
             this.btnClose.Size = new Size(30, 30);
             this.btnClose.Location = new Point(650, 10);
             this.btnClose.FlatStyle = FlatStyle.Flat;
@@ -95,7 +83,6 @@ namespace FileTransferClient
             this.Controls.Add(this.buttonLogin);
             this.Controls.Add(this.textBoxPassword);
             this.Controls.Add(this.textBoxUsername);
-            this.Controls.Add(this.btnMinimize);
             this.Controls.Add(this.btnClose);
             this.FormBorderStyle = FormBorderStyle.None;
             this.Name = "LoginForm";
@@ -252,11 +239,6 @@ namespace FileTransferClient
             Writer?.Close();
             Reader?.Close();
             SslStream?.Close();
-        }
-
-        private void BtnMinimize_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
         }
 
         private void BtnClose_Click(object sender, EventArgs e)

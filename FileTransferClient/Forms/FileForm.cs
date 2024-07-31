@@ -42,8 +42,18 @@ namespace FileTransferClient
             {
                 Dock = DockStyle.Top,
                 Height = 30,
-                BackColor = Color.FromArgb(2,8,28)
+                BackColor = Color.FromArgb(2, 8, 28)
             };
+
+            Label labelUser = new Label
+            {
+                Text = $"Connected as: {Environment.UserName}",
+                Font = new Font("Segoe UI", 12F, FontStyle.Regular),
+                ForeColor = Color.FromArgb(236, 240, 241),
+                Location = new Point(10, 5),
+                AutoSize = true
+            };
+            this.panelTop.Controls.Add(labelUser);
 
             this.logoPanel = new Panel
             {
@@ -69,6 +79,18 @@ namespace FileTransferClient
             this.btnClose.FlatAppearance.BorderSize = 0;
             this.btnClose.Click += new EventHandler(BtnClose_Click);
             this.panelTop.Controls.Add(this.btnClose);
+
+            // List of Files Label
+            Label labelListOfFiles = new Label
+            {
+                Text = "List of files",
+                Font = new Font("Times New Roman", 26F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(236, 240, 241),
+                BackColor = Color.Transparent,
+                AutoSize = true
+            };
+
+            labelListOfFiles.Location = new Point(316, 240);
 
             this.listBoxFiles = new ListBox
             {
@@ -97,6 +119,7 @@ namespace FileTransferClient
             this.ClientSize = new Size(800, 800);
             this.Controls.Add(this.panelTop);
             this.Controls.Add(this.logoPanel);
+            this.Controls.Add(labelListOfFiles); // Add the label to the form
             this.Controls.Add(this.listBoxFiles);
             this.Controls.Add(this.buttonUpload);
             this.Controls.Add(this.buttonDownload);
@@ -390,7 +413,7 @@ namespace FileTransferClient
         {
             Panel logoPanel = (Panel)sender;
 
-            string imagePath = "../../cloud.png";
+            string imagePath = "../../../cloud.png";
             if (File.Exists(imagePath))
             {
                 using (Image logoImage = Image.FromFile(imagePath))
@@ -408,7 +431,7 @@ namespace FileTransferClient
                     int newWidth = (int)(imageWidth * scale * 1.5);
                     int newHeight = (int)(imageHeight * scale * 1.5);
 
-                    int imageX = 400 - newWidth/2;
+                    int imageX = 400 - newWidth / 2;
                     int imageY = 0;
                     e.Graphics.DrawImage(logoImage, imageX, imageY, newWidth, newHeight);
                 }

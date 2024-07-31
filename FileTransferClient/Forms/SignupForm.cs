@@ -6,7 +6,7 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 
-namespace FileTransferClient
+namespace Client.Forms
 {
     public partial class SignupForm : Form
     {
@@ -17,97 +17,84 @@ namespace FileTransferClient
         public string Username { get; private set; }
         public string Password { get; private set; }
 
-        private Button btnMinimize;
         private Button btnClose;
 
         public SignupForm()
         {
             InitializeComponent();
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.Paint += new PaintEventHandler(SetBackgroundGradient);
+            StartPosition = FormStartPosition.CenterScreen;
+            Paint += new PaintEventHandler(SetBackgroundGradient);
             AddPlaceholderText();
         }
 
         private void InitializeComponent()
         {
-            this.txtUsername = new CustomTextBox();
-            this.txtPassword = new CustomTextBox();
-            this.btnSignup = new CustomButton();
-            this.btnMinimize = new Button();
-            this.btnClose = new Button();
+            txtUsername = new CustomTextBox();
+            txtPassword = new CustomTextBox();
+            btnSignup = new CustomButton();
+            btnClose = new Button();
 
-            this.SuspendLayout();
+            SuspendLayout();
 
-            this.txtUsername.Location = new Point(20, 80);
-            this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new Size(640, 60);
-            this.txtUsername.TabIndex = 0;
-            this.txtUsername.Text = "Username";
-            this.txtUsername.Enter += new EventHandler(this.TextBox_Enter);
-            this.txtUsername.Leave += new EventHandler(this.TextBox_Leave);
+            txtUsername.Location = new Point(20, 80);
+            txtUsername.Name = "txtUsername";
+            txtUsername.Size = new Size(640, 60);
+            txtUsername.TabIndex = 0;
+            txtUsername.Text = "Username";
+            txtUsername.Enter += new EventHandler(TextBox_Enter);
+            txtUsername.Leave += new EventHandler(TextBox_Leave);
 
-            this.txtPassword.Location = new Point(20, 150);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new Size(640, 60);
-            this.txtPassword.TabIndex = 1;
-            this.txtPassword.Text = "Password";
-            this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Enter += new EventHandler(this.TextBox_Enter);
-            this.txtPassword.Leave += new EventHandler(this.TextBox_Leave);
+            txtPassword.Location = new Point(20, 150);
+            txtPassword.Name = "txtPassword";
+            txtPassword.Size = new Size(640, 60);
+            txtPassword.TabIndex = 1;
+            txtPassword.Text = "Password";
+            txtPassword.PasswordChar = '*';
+            txtPassword.Enter += new EventHandler(TextBox_Enter);
+            txtPassword.Leave += new EventHandler(TextBox_Leave);
 
-            this.btnSignup.Location = new Point(20, 220);
-            this.btnSignup.Name = "btnSignup";
-            this.btnSignup.Size = new Size(640, 80);
-            this.btnSignup.TabIndex = 2;
-            this.btnSignup.Text = "Signup";
-            this.btnSignup.Click += new EventHandler(this.BtnSignup_Click);
+            btnSignup.Location = new Point(20, 220);
+            btnSignup.Name = "btnSignup";
+            btnSignup.Size = new Size(640, 80);
+            btnSignup.TabIndex = 2;
+            btnSignup.Text = "Signup";
+            btnSignup.Click += new EventHandler(BtnSignup_Click);
 
-            this.btnMinimize.Size = new Size(30, 30);
-            this.btnMinimize.Location = new Point(620, 10);
-            this.btnMinimize.FlatStyle = FlatStyle.Flat;
-            this.btnMinimize.FlatAppearance.BorderSize = 0;
-            this.btnMinimize.Text = "—";
-            this.btnMinimize.Font = new Font("Arial", 12F, FontStyle.Bold);
-            this.btnMinimize.ForeColor = Color.White;
-            this.btnMinimize.BackColor = Color.Transparent;
-            this.btnMinimize.Click += new EventHandler(BtnMinimize_Click);
+            btnClose.Size = new Size(30, 30);
+            btnClose.Location = new Point(650, 10);
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.FlatAppearance.BorderSize = 0;
+            btnClose.Text = "×";
+            btnClose.Font = new Font("Arial", 12F, FontStyle.Bold);
+            btnClose.ForeColor = Color.White;
+            btnClose.BackColor = Color.Transparent;
+            btnClose.Click += new EventHandler(BtnClose_Click);
 
-            this.btnClose.Size = new Size(30, 30);
-            this.btnClose.Location = new Point(650, 10);
-            this.btnClose.FlatStyle = FlatStyle.Flat;
-            this.btnClose.FlatAppearance.BorderSize = 0;
-            this.btnClose.Text = "×";
-            this.btnClose.Font = new Font("Arial", 12F, FontStyle.Bold);
-            this.btnClose.ForeColor = Color.White;
-            this.btnClose.BackColor = Color.Transparent;
-            this.btnClose.Click += new EventHandler(BtnClose_Click);
-
-            this.AutoScaleDimensions = new SizeF(9F, 18F);
-            this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new Size(680, 350);
-            this.Controls.Add(this.btnSignup);
-            this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.txtUsername);
-            this.Controls.Add(this.btnMinimize);
-            this.Controls.Add(this.btnClose);
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.Name = "SignupForm";
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.Text = "Signup";
-            this.BackColor = Color.FromArgb(2, 8, 28);
-            this.ForeColor = Color.White;
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(9F, 18F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(680, 350);
+            Controls.Add(btnSignup);
+            Controls.Add(txtPassword);
+            Controls.Add(txtUsername);
+            Controls.Add(btnClose);
+            FormBorderStyle = FormBorderStyle.None;
+            Name = "SignupForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Signup";
+            BackColor = Color.FromArgb(2, 8, 28);
+            ForeColor = Color.White;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         private void SetBackgroundGradient(object sender, PaintEventArgs e)
         {
-            using (LinearGradientBrush brush = new LinearGradientBrush(this.ClientRectangle,
+            using (LinearGradientBrush brush = new LinearGradientBrush(ClientRectangle,
                                                                        Color.FromArgb(2, 8, 28),
                                                                        Color.FromArgb(22, 33, 62),
                                                                        90F))
             {
-                e.Graphics.FillRectangle(brush, this.ClientRectangle);
+                e.Graphics.FillRectangle(brush, ClientRectangle);
             }
         }
 
@@ -125,8 +112,8 @@ namespace FileTransferClient
             if (SignupUser(Username, Password))
             {
                 MessageBox.Show("Signup successful! You can now log in.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                DialogResult = DialogResult.OK;
+                Close();
             }
             else
             {
@@ -218,14 +205,9 @@ namespace FileTransferClient
             sslStream?.Close();
         }
 
-        private void BtnMinimize_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
-
         private void BtnClose_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         protected override void Dispose(bool disposing)

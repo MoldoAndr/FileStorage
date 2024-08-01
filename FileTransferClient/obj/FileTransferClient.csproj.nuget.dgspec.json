@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Andrei\\Desktop\\Folder nou\\FileStorage\\FileTransferClient\\FileTransferClient.csproj": {}
+    "C:\\Users\\Andrei\\Videos\\FileStorage\\FileTransferClient\\FileTransferClient.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Andrei\\Desktop\\Folder nou\\FileStorage\\FileTransferClient\\FileTransferClient.csproj": {
+    "C:\\Users\\Andrei\\Videos\\FileStorage\\FileTransferClient\\FileTransferClient.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Andrei\\Desktop\\Folder nou\\FileStorage\\FileTransferClient\\FileTransferClient.csproj",
+        "projectUniqueName": "C:\\Users\\Andrei\\Videos\\FileStorage\\FileTransferClient\\FileTransferClient.csproj",
         "projectName": "FileTransferClient",
-        "projectPath": "C:\\Users\\Andrei\\Desktop\\Folder nou\\FileStorage\\FileTransferClient\\FileTransferClient.csproj",
+        "projectPath": "C:\\Users\\Andrei\\Videos\\FileStorage\\FileTransferClient\\FileTransferClient.csproj",
         "packagesPath": "C:\\Users\\Andrei\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Andrei\\Desktop\\Folder nou\\FileStorage\\FileTransferClient\\obj\\",
+        "outputPath": "C:\\Users\\Andrei\\Videos\\FileStorage\\FileTransferClient\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.Design;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -224,6 +225,37 @@ public static class FileOperations
         }
     }
 
+    public static void RenameFile(BinaryReader reader, BinaryWriter writer, string username)
+    {
+        string folder = UserManager.GetUserFolder(username);
+        string oldName = reader.ReadString();
+        string newName = reader.ReadString();
+        string oldPath = Path.Combine(folder, oldName);
+        string newPath = Path.Combine(folder, newName);
+
+        try
+        {
+            Console.WriteLine($"Attempting to rename file from {oldPath} to {newPath}");
+
+                if (File.Exists(newPath))
+                {
+                    writer.Write(false);
+                    Console.WriteLine($"Error: File {newPath} already exists.");
+                }
+                else
+                {
+                    File.Move(oldPath, newPath);
+                    writer.Write(true);
+                    Console.WriteLine($"File renamed successfully from {oldName} to {newName}.");
+                }
+        }
+        catch (IOException ioEx)
+        {
+            writer.Write(false);
+            Console.WriteLine($"IO Exception while renaming file: {ioEx.Message}");
+        }
+    }
+
     private static void RetryFileOperation(Action fileOperation, int maxRetries = 5, int delayBetweenRetries = 1000)
     {
         for (int attempt = 1; attempt <= maxRetries; attempt++)
@@ -266,6 +298,5 @@ public static class FileOperations
             writer.Write(false);
         }
     }
-
 
 }

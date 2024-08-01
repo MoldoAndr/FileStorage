@@ -7,6 +7,9 @@
     <Compile Update="Forms\InitialForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\InputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>

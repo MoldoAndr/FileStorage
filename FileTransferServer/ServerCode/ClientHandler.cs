@@ -38,6 +38,7 @@ public static class ClientHandler
                                 case "LIST":
                                 case "SHARE":
                                 case "VIEW":
+                                case "RENAME":
                                 case "SEND":
                                     if (authenticated)
                                     {

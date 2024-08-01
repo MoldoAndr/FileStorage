@@ -4,6 +4,7 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
+
 #pragma warning disable CS8622
 
 namespace FileTransferClient.Forms
@@ -57,6 +58,7 @@ namespace FileTransferClient.Forms
                 "View" => buttonView_Click,
                 "Share" => buttonShare_Click,
                 "Send" => buttonSend_Click,
+                "Rename" => buttonRename_Click,
                 _ => null,
             };
         }
@@ -292,6 +294,44 @@ namespace FileTransferClient.Forms
                 }
             }
         }
+
+        private void buttonRename_Click(object sender, EventArgs e)
+        {
+            if (ListBoxFiles.SelectedItem != null)
+            {
+                string oldFileName = ListBoxFiles.SelectedItem.ToString();
+
+                using (InputDialog inputDialog = new InputDialog("Enter the new file name:"))
+                {
+                    if (inputDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        string newFileName = inputDialog.InputText;
+
+                            try
+                            {
+                                Writer.Write("RENAME");
+                                Writer.Write(oldFileName);
+                                Writer.Write(newFileName);
+                                bool renameSuccess = Reader.ReadBoolean();
+                                if (renameSuccess)
+                                {
+                                UpdateFileList();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Error renaming file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                    }
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("No file selected. Please select a file to rename.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
     }
 }
 #pragma warning restore CS8622

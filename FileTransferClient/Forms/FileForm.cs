@@ -4,7 +4,6 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-
 #pragma warning disable CS8622
 
 namespace FileTransferClient.Forms
@@ -58,6 +57,8 @@ namespace FileTransferClient.Forms
                 "View" => buttonView_Click,
                 "Share" => buttonShare_Click,
                 "Send" => buttonSend_Click,
+                "Modify" => buttonModify_Click,
+                "Refresh" => buttonRefresh_Click,
                 "Rename" => buttonRename_Click,
                 _ => null,
             };
@@ -194,12 +195,35 @@ namespace FileTransferClient.Forms
         {
             if (ListBoxFiles.SelectedItem != null)
             {
-                string fileName = ListBoxFiles.SelectedItems.ToString();
-                Writer.Write("MODIFY");
+                string fileName = ListBoxFiles.SelectedItem.ToString();
+                Writer.Write("VIEW");
                 Writer.Write(fileName);
-                UpdateFileList();
+                Writer.Flush();
+
+                bool fileExists = Reader.ReadBoolean();
+                if (fileExists)
+                {
+                    try
+                    {
+                        int fileBytesLength = Reader.ReadInt32();
+                        byte[] fileBytes = Reader.ReadBytes(fileBytesLength);
+                        string content = Encoding.UTF8.GetString(fileBytes);
+
+                        TextEditorForm modifyForm = new TextEditorForm(fileName, content, Reader, Writer);
+                        modifyForm.Show();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"An error occurred while reading the file bytes: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("File not found on the server.", "View Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
+
 
         private void buttonShare_Click(object sender, EventArgs e)
         {
@@ -332,6 +356,10 @@ namespace FileTransferClient.Forms
             }
         }
 
+        private void buttonRefresh_Click(object sender, EventArgs e)
+        {
+            UpdateFileList();
+        }
     }
 }
 #pragma warning restore CS8622

@@ -1,14 +1,1 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const menuButton = document.getElementById('menu-button');
-    const navList = document.querySelector('nav ul');
-
-    menuButton.addEventListener('click', () => {
-        navList.classList.toggle('show');
-    });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const footerYear = document.getElementById('current-year');
-    const currentYear = new Date().getFullYear();
-    footerYear.textContent = currentYear;
-});
+andrei si bianca se iubesc mult mult :)

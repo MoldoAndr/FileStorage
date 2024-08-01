@@ -23,7 +23,7 @@
             this.buttonOK = new System.Windows.Forms.Button();
             this.SuspendLayout();
             this.labelPrompt.AutoSize = true;
-            this.labelPrompt.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            this.labelPrompt.Font = new Font("Times New Roman", 14F, FontStyle.Bold);
             this.labelPrompt.ForeColor = Color.FromArgb(236, 240, 241);
             this.labelPrompt.Location = new System.Drawing.Point(12, 20);
             this.labelPrompt.Name = "labelPrompt";
@@ -31,7 +31,7 @@
             this.labelPrompt.TabIndex = 0;
             this.labelPrompt.Text = "Prompt";
 
-            this.textBoxInput.Font = new Font("Segoe UI", 12F);
+            this.textBoxInput.Font = new Font("Times New Roman", 14F, FontStyle.Bold);
             this.textBoxInput.ForeColor = Color.White;
             this.textBoxInput.BackColor = Color.FromArgb(22, 33, 62);
             this.textBoxInput.Location = new System.Drawing.Point(16, 50);
@@ -40,7 +40,7 @@
             this.textBoxInput.TabIndex = 1;
 
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            this.buttonOK.Font = new Font("Times New Roman", 14F, FontStyle.Bold);
             this.buttonOK.ForeColor = Color.FromArgb(236, 240, 241);
             this.buttonOK.BackColor = Color.FromArgb(17, 10, 115);
             this.buttonOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;

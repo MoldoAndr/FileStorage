@@ -93,10 +93,7 @@ namespace FileTransferClient.Forms
 
         private void SetBackgroundGradient(object sender, PaintEventArgs e)
         {
-            using LinearGradientBrush brush = new(ClientRectangle,
-                                                                       Color.FromArgb(2, 8, 28),
-                                                                       Color.FromArgb(22, 33, 62),
-                                                                       90F);
+            using LinearGradientBrush brush = new(ClientRectangle, Color.FromArgb(2, 8, 28), Color.FromArgb(22, 33, 62), 90F);
             e.Graphics.FillRectangle(brush, ClientRectangle);
         }
 
@@ -220,13 +217,13 @@ namespace FileTransferClient.Forms
         {
             textBoxPassword.Clear();
             textBoxPassword.Text = "Password";
-            textBoxPassword.ForeColor = Color.DarkBlue;
+            textBoxPassword.ForeColor = Color.White;
             textBoxPassword.PasswordChar = '\0';
 
             if (string.IsNullOrWhiteSpace(textBoxUsername.Text))
             {
                 textBoxUsername.Text = "Username";
-                textBoxUsername.ForeColor = Color.DarkBlue;
+                textBoxUsername.ForeColor = Color.White;
             }
         }
 

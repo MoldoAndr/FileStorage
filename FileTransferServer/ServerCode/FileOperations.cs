@@ -225,6 +225,38 @@ public static class FileOperations
         }
     }
 
+    public static void SaveFile(BinaryReader reader, BinaryWriter writer, string username)
+    {
+        string fileName = reader.ReadString();
+        int fileSize = reader.ReadInt32(); // Use ReadInt32 to match the client-side WriteInt32
+        string userFolder = UserManager.GetUserFolder(username);
+        string filePath = Path.Combine(userFolder, fileName);
+
+        Console.WriteLine($"Saving file {fileName} of size {fileSize} bytes for user {username}.");
+
+        try
+        {
+            DirectoryHelper.EnsureDirectoryExists(userFolder);
+
+            // Read the entire file content at once
+            byte[] fileContent = reader.ReadBytes(fileSize);
+
+            // Write the file content to the file
+            using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+            {
+                fs.Write(fileContent, 0, fileContent.Length);
+            }
+
+            writer.Write(true);
+            Console.WriteLine($"File {fileName} saved successfully.");
+        }
+        catch (IOException ioEx)
+        {
+            writer.Write(false);
+            Console.WriteLine($"IO Exception while saving file: {ioEx.Message}");
+        }
+    }
+
     public static void RenameFile(BinaryReader reader, BinaryWriter writer, string username)
     {
         string folder = UserManager.GetUserFolder(username);

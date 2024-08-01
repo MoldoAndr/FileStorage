@@ -24,7 +24,9 @@ namespace FileTransferClient.Forms
         public Button BtnBack { get; set; } 
         public Button ButtonRename { get; set; }
         public Button ButtonModify { get; set; }
+        public Button ButtonRefresh {  get; set; }
         public Button User { get; set; }
+        public Button ListAllFiles { get; set; }
         public ListBox ListBoxFiles { get; set; }
         public Panel PanelTop { get; set; }
         public Panel LogoPanel { get; set; }
@@ -58,7 +60,7 @@ namespace FileTransferClient.Forms
 
             LogoPanel = new Panel
             {
-                Location = new Point(0, 30),
+                Location = new Point(0, 40),
                 Height = 150,
                 Width = 800,
                 BackColor = Color.Transparent,
@@ -79,22 +81,12 @@ namespace FileTransferClient.Forms
             };
             BtnBack.FlatAppearance.BorderSize = 0;
             BtnBack.Click += new EventHandler(BtnBack_Click);
-      
-            PanelTop.Controls.Add(BtnBack);
 
-            Label labelListOfFiles = new()
-            {
-                Text = "List of files",
-                Font = new Font("Times New Roman", 26F, FontStyle.Bold),
-                ForeColor = Color.FromArgb(236, 240, 241),
-                BackColor = Color.Transparent,
-                AutoSize = true,
-                Location = new Point(316, 240)
-            };
+            PanelTop.Controls.Add(BtnBack);
 
             ListBoxFiles = new ListBox
             {
-                Font = new Font("Segoe UI", 14F),
+                Font = new Font("Times New Roman", 14F, FontStyle.Bold),
                 ItemHeight = 32,
                 Location = new Point(20, 280),
                 Size = new Size(760, 300),
@@ -103,6 +95,7 @@ namespace FileTransferClient.Forms
                 BorderStyle = BorderStyle.None
             };
 
+            ListAllFiles = ListFileButton("List of files");
             ButtonUpload = CreateStyledButton("Upload", 20, 590);
             ButtonDownload = CreateStyledButton("Download", 149, 590);
             ButtonDelete = CreateStyledButton("Delete", 278, 590);
@@ -111,13 +104,14 @@ namespace FileTransferClient.Forms
             ButtonModify = CreateStyledButton("Modify", 665, 590);
             ButtonShare = CreateStyledButton("Share", 20, 650);
             ButtonSend = CreateStyledButton("Send", 20, 710);
+            ButtonRefresh = CreateStyledButton("Refresh", 665, 240);
             TextBoxRecipient = CreateStyledTextBox("Enter recipient username for sharing", 150, 650);
             TextBoxSendRecipient = CreateStyledTextBox("Enter recipient username for sending", 150, 710);
 
             ClientSize = new Size(800, 800);
             Controls.Add(PanelTop);
+            Controls.Add(ListAllFiles);
             Controls.Add(LogoPanel);
-            Controls.Add(labelListOfFiles);
             Controls.Add(ListBoxFiles);
             Controls.Add(ButtonUpload);
             Controls.Add(ButtonDownload);
@@ -129,6 +123,8 @@ namespace FileTransferClient.Forms
             Controls.Add(TextBoxSendRecipient);
             Controls.Add(ButtonRename);
             Controls.Add(ButtonModify);
+            Controls.Add(ButtonRefresh);
+
             FormBorderStyle = FormBorderStyle.None;
             StartPosition = FormStartPosition.CenterScreen;
             BackColor = Color.FromArgb(22, 33, 62);
@@ -153,6 +149,30 @@ namespace FileTransferClient.Forms
             button.FlatAppearance.BorderSize = 0;
             button.Click += GetButtonClickHandler(text);
             return button;
+        }
+
+        private Button ListFileButton(string text)
+        {
+            Button button = new()
+            {
+                Text = text,
+                Font = new Font("Times New Roman", 24F, FontStyle.Bold),
+                Size = new Size(200,75),
+                Location = new Point(300, 195),
+                BackColor = Color.Transparent,
+                ForeColor = Color.FromArgb(236, 240, 241),
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand,
+                
+            };
+            button.FlatAppearance.BorderSize = 0;
+
+            return button;
+        }
+
+        private object GetCenterToScreen()
+        {
+            return CenterToScreen;
         }
 
         private TextBox CreateStyledTextBox(string placeholder, int x, int y)

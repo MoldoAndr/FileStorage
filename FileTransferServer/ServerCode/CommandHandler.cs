@@ -1,4 +1,6 @@
-﻿public static class CommandHandler
+﻿using System.Xml.Linq;
+
+public static class CommandHandler
 {
     public static void HandleAuthenticatedCommand(string command, BinaryReader reader, BinaryWriter writer, string username)
     {
@@ -27,6 +29,9 @@
                     break;
                 case "SEND":
                     FileOperations.FileSend(reader, writer, username);
+                    break;
+                case "SAVE":
+                    FileOperations.SaveFile(reader, writer, username);
                     break;
                 case "RENAME":
                     FileOperations.RenameFile(reader, writer, username);

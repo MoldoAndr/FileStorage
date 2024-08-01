@@ -1,4 +1,6 @@
 ﻿using FileTransferClient.Forms;
+using System;
+using System.Windows.Forms;
 
 namespace FileTransferClient
 {
@@ -9,42 +11,45 @@ namespace FileTransferClient
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            while (true)
+
+            Application.Run(new InitialFormHandler());
+        }
+
+        private class InitialFormHandler : Form
+        {
+            public InitialFormHandler()
             {
-                if (!ShowInitialForm())
+                LoadInitialForm();
+            }
+
+            private void LoadInitialForm()
+            {
+                while (true)
                 {
-                    break;
+                    using InitialForm initialForm = new();
+                    if (initialForm.ShowDialog() != DialogResult.OK)
+                        break;
+
+                    if (initialForm.IsLogin)
+                    {
+                        using LoginForm loginForm = new();
+                        if (loginForm.ShowDialog() == DialogResult.OK)
+                        {
+                            Application.Run(new FileForm(loginForm.SslStream, loginForm.Reader, loginForm.Writer, loginForm.Username));
+                        }
+                    }
+                    else
+                    {
+                        using SignupForm signupForm = new();
+                        DialogResult result = signupForm.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+                            _ = MessageBox.Show("Signup successful! Please log in.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
                 }
+                this.Close();
             }
-        }
-
-        private static bool ShowInitialForm()
-        {
-            using InitialForm initialForm = new();
-            return initialForm.ShowDialog() == DialogResult.OK && (initialForm.IsLogin ? ShowLoginForm() : ShowSignupForm());
-        }
-
-        private static bool ShowLoginForm()
-        {
-            using LoginForm loginForm = new();
-            if (loginForm.ShowDialog() == DialogResult.OK)
-            {
-                Application.Run(new FileForm(loginForm.SslStream, loginForm.Reader, loginForm.Writer, loginForm.Username));
-                return false;
-            }
-            return true;
-        }
-
-        private static bool ShowSignupForm()
-        {
-            using SignupForm signupForm = new();
-            DialogResult result = signupForm.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                _ = MessageBox.Show("Signup successful! Please log in.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            return true;
         }
     }
-
 }

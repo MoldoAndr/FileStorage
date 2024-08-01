@@ -1,4 +1,9 @@
-﻿public static class FileOperations
+﻿using System.ComponentModel.Design;
+using System.Net.Sockets;
+using System.Text;
+using static System.Net.Mime.MediaTypeNames;
+
+public static class FileOperations
 {
     public static void ReceiveFile(BinaryReader reader, string userFolder)
     {
@@ -219,7 +224,6 @@
         }
     }
 
-
     private static void RetryFileOperation(Action fileOperation, int maxRetries = 5, int delayBetweenRetries = 1000)
     {
         for (int attempt = 1; attempt <= maxRetries; attempt++)
@@ -240,5 +244,28 @@
             }
         }
     }
+
+    internal static void SendContent(BinaryReader reader, BinaryWriter writer, string userFolder)
+    {
+        string fileName = reader.ReadString();
+        string filePath = Path.Combine(userFolder, fileName);
+
+        Console.WriteLine($"Viewing file {fileName}.");
+        if (File.Exists(filePath))
+        {
+            writer.Write(true);
+            byte[] fileBytes = File.ReadAllBytes(filePath);
+            writer.Write(fileBytes.Length);
+            writer.Write(fileBytes);
+            writer.Flush();
+
+            Console.WriteLine($"Sent file {fileName} of size {fileBytes.Length} bytes.");
+        }
+        else
+        {
+            writer.Write(false);
+        }
+    }
+
 
 }

@@ -6,12 +6,13 @@ namespace FileTransferClient.Forms
 {
     public partial class LoginForm : Form
     {
-        public SslStream SslStream { get; private set; }
-        public BinaryReader Reader { get; private set; }
-        public BinaryWriter Writer { get; private set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-
+        public SslStream SslStream;
+        public BinaryReader Reader;
+        public BinaryWriter Writer;
+        
+        public string Username { get; private set; }
+        public string Password { get; private set; }
+        private string ServerIP = "192.168.0.190";
         private Button btnClose;
 
         public LoginForm()
@@ -64,7 +65,7 @@ namespace FileTransferClient.Forms
             buttonLogin.Click += new EventHandler(ButtonLogin_Click);
 
             btnClose.Size = new Size(30, 30);
-            btnClose.Location = new Point(650, 10);
+            btnClose.Location = new Point(650, 0);
             btnClose.FlatStyle = FlatStyle.Flat;
             btnClose.FlatAppearance.BorderSize = 0;
             btnClose.Text = "×";
@@ -129,7 +130,7 @@ namespace FileTransferClient.Forms
         {
             try
             {
-                System.Net.Sockets.TcpClient client = new("192.168.0.190", 8888);
+                System.Net.Sockets.TcpClient client = new(this.ServerIP, 8888);
                 SslStream = new SslStream(client.GetStream(), false, new RemoteCertificateValidationCallback(ValidateServerCertificate), null);
                 SslStream.AuthenticateAsClient("FileTransferServer");
 

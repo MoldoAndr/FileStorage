@@ -12,7 +12,7 @@ namespace FileTransferClient.Forms
 
         public string Username { get; private set; }
         public string Password { get; private set; }
-
+        private string ServerIP = "192.169.0.190";
         private Button btnClose;
 
         public SignupForm()
@@ -119,7 +119,7 @@ namespace FileTransferClient.Forms
         {
             try
             {
-                System.Net.Sockets.TcpClient client = new("192.168.0.190", 8888);
+                System.Net.Sockets.TcpClient client = new(this.ServerIP, 8888);
                 sslStream = new SslStream(client.GetStream(), false, new RemoteCertificateValidationCallback(ValidateServerCertificate), null);
                 sslStream.AuthenticateAsClient("FileTransferServer");
 

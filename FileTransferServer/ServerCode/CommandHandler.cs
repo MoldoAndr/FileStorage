@@ -22,6 +22,9 @@
                 case "SHARE":
                     FileOperations.ShareFile(reader, writer, username);
                     break;
+                case "VIEW":
+                    FileOperations.SendContent(reader,writer,userFolder);
+                    break;
                 case "SEND":
                     FileOperations.FileSend(reader, writer, username);
                     break;

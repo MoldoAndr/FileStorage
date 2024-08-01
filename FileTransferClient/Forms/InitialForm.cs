@@ -47,7 +47,7 @@ namespace FileTransferClient.Forms
 
             titleBar.Size = new Size(800, 30);
             titleBar.Location = new Point(0, 0);
-            titleBar.BackColor = Color.FromArgb(1, 4, 14);
+            titleBar.BackColor = Color.Transparent;
             titleBar.MouseDown += new MouseEventHandler(TitleBar_MouseDown);
 
             btnClose.Size = new Size(30, 30);

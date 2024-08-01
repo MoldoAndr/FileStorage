@@ -12,6 +12,7 @@ Oferă capacități securizate de încărcare, descărcare și gestionare a fiș
 - Listarea fișierelor stocate pe server
 - Partajarea fișierelor intre utilizatori
 - Redenumirea fisierelor de pe server
+- Vizualizarea continutului fisierelor de tip text in timp real de pe server
 - Criptare TLS pentru toată comunicarea client-server
 
 ## Componente

@@ -1,4 +1,4 @@
-#Transfer Securizat de Fișiere
+# Transfer Securizat de Fișiere
 
 ## Descriere
 Sistem client-server de transfer de fișiere implementat în C# folosind Windows Forms pentru interfața client. 

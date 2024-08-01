@@ -92,7 +92,7 @@ public static class ClientHandler
         Console.WriteLine(userCreated ? $"New user created: {newUsername}" : $"Failed to create user: {newUsername}");
     }
 
-    private static string HandleLogin(BinaryReader reader, BinaryWriter writer, ref bool authenticated)
+    private static string? HandleLogin(BinaryReader reader, BinaryWriter writer, ref bool authenticated)
     {
         string username = reader.ReadString();
         string password = reader.ReadString();

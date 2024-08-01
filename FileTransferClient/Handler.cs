@@ -1,13 +1,11 @@
-﻿using System;
-using System.Windows.Forms;
-using Client.Forms;
+﻿using FileTransferClient.Forms;
 
 namespace FileTransferClient
 {
-    static class Handler
+    internal static class Handler
     {
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -20,38 +18,33 @@ namespace FileTransferClient
             }
         }
 
-        static bool ShowInitialForm()
+        private static bool ShowInitialForm()
         {
-            using (InitialForm initialForm = new InitialForm())
-            {
-                return initialForm.ShowDialog() == DialogResult.OK ? initialForm.IsLogin ? ShowLoginForm() : ShowSignupForm() : false;
-            }
+            using InitialForm initialForm = new();
+            return initialForm.ShowDialog() == DialogResult.OK && (initialForm.IsLogin ? ShowLoginForm() : ShowSignupForm());
         }
 
-        static bool ShowLoginForm()
+        private static bool ShowLoginForm()
         {
-            using (LoginForm loginForm = new LoginForm())
+            using LoginForm loginForm = new();
+            if (loginForm.ShowDialog() == DialogResult.OK)
             {
-                if (loginForm.ShowDialog() == DialogResult.OK)
-                {
-                    Application.Run(new FileForm(loginForm.SslStream, loginForm.Reader, loginForm.Writer));
-                    return false;
-                }
-                return true;
+                Application.Run(new FileForm(loginForm.SslStream, loginForm.Reader, loginForm.Writer, loginForm.Username));
+                return false;
             }
+            return true;
         }
 
-        static bool ShowSignupForm()
+        private static bool ShowSignupForm()
         {
-            using (SignupForm signupForm = new SignupForm())
+            using SignupForm signupForm = new();
+            DialogResult result = signupForm.ShowDialog();
+            if (result == DialogResult.OK)
             {
-                DialogResult result = signupForm.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    MessageBox.Show("Signup successful! Please log in.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                return true;
+                _ = MessageBox.Show("Signup successful! Please log in.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+            return true;
         }
     }
+
 }

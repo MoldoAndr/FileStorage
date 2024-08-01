@@ -1,12 +1,8 @@
-﻿using System;
-using System.Drawing.Drawing2D;
-using System.Drawing;
-using System.IO;
+﻿using System.Drawing.Drawing2D;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
-using System.Windows.Forms;
 
-namespace Client.Forms
+namespace FileTransferClient.Forms
 {
     public partial class SignupForm : Form
     {
@@ -89,13 +85,11 @@ namespace Client.Forms
 
         private void SetBackgroundGradient(object sender, PaintEventArgs e)
         {
-            using (LinearGradientBrush brush = new LinearGradientBrush(ClientRectangle,
+            using LinearGradientBrush brush = new(ClientRectangle,
                                                                        Color.FromArgb(2, 8, 28),
                                                                        Color.FromArgb(22, 33, 62),
-                                                                       90F))
-            {
-                e.Graphics.FillRectangle(brush, ClientRectangle);
-            }
+                                                                       90F);
+            e.Graphics.FillRectangle(brush, ClientRectangle);
         }
 
         private void BtnSignup_Click(object sender, EventArgs e)
@@ -105,19 +99,19 @@ namespace Client.Forms
 
             if (Username == "Username" || Password == "Password")
             {
-                MessageBox.Show("Please enter a valid username and password.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Please enter a valid username and password.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (SignupUser(Username, Password))
             {
-                MessageBox.Show("Signup successful! You can now log in.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _ = MessageBox.Show("Signup successful! You can now log in.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;
                 Close();
             }
             else
             {
-                MessageBox.Show("Signup failed. Username may already exist.", "Signup Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show("Signup failed. Username may already exist.", "Signup Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -125,7 +119,7 @@ namespace Client.Forms
         {
             try
             {
-                System.Net.Sockets.TcpClient client = new System.Net.Sockets.TcpClient("192.168.0.190", 8888);
+                System.Net.Sockets.TcpClient client = new("192.168.0.190", 8888);
                 sslStream = new SslStream(client.GetStream(), false, new RemoteCertificateValidationCallback(ValidateServerCertificate), null);
                 sslStream.AuthenticateAsClient("FileTransferServer");
 
@@ -141,7 +135,7 @@ namespace Client.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error: {ex.Message}", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             finally
@@ -167,7 +161,7 @@ namespace Client.Forms
 
         private void TextBox_Enter(object sender, EventArgs e)
         {
-            TextBox textBox = sender as TextBox;
+            TextBox? textBox = sender as TextBox;
             if (textBox.ForeColor == Color.White)
             {
                 textBox.Text = "";
@@ -181,7 +175,7 @@ namespace Client.Forms
 
         private void TextBox_Leave(object sender, EventArgs e)
         {
-            TextBox textBox = sender as TextBox;
+            TextBox? textBox = sender as TextBox;
             if (string.IsNullOrWhiteSpace(textBox.Text))
             {
                 if (textBox == txtUsername)

@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Andrei\\Desktop\\FileTransfer\\FileTransferClient\\FileTransferClient.csproj",
+      "projectUniqueName": "C:\\Users\\Andrei\\Desktop\\Folder nou\\FileStorage\\FileTransferClient\\FileTransferClient.csproj",
       "projectName": "FileTransferClient",
-      "projectPath": "C:\\Users\\Andrei\\Desktop\\FileTransfer\\FileTransferClient\\FileTransferClient.csproj",
+      "projectPath": "C:\\Users\\Andrei\\Desktop\\Folder nou\\FileStorage\\FileTransferClient\\FileTransferClient.csproj",
       "packagesPath": "C:\\Users\\Andrei\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Andrei\\Desktop\\FileTransfer\\FileTransferClient\\obj\\",
+      "outputPath": "C:\\Users\\Andrei\\Desktop\\Folder nou\\FileStorage\\FileTransferClient\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

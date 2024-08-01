@@ -1,9 +1,6 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Windows.Forms;
+﻿using System.Drawing.Drawing2D;
 
-namespace Client.Forms
+namespace FileTransferClient.Forms
 {
     public partial class InitialForm : Form
     {
@@ -18,13 +15,11 @@ namespace Client.Forms
 
         private void SetBackgroundGradient(object sender, PaintEventArgs e)
         {
-            using (LinearGradientBrush brush = new LinearGradientBrush(ClientRectangle,
+            using LinearGradientBrush brush = new(ClientRectangle,
                                                                        Color.FromArgb(2, 8, 28),
                                                                        Color.FromArgb(22, 33, 62),
-                                                                       90F))
-            {
-                e.Graphics.FillRectangle(brush, ClientRectangle);
-            }
+                                                                       90F);
+            e.Graphics.FillRectangle(brush, ClientRectangle);
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -131,8 +126,8 @@ namespace Client.Forms
         {
             if (e.Button == MouseButtons.Left)
             {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                _ = ReleaseCapture();
+                _ = SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
 
@@ -174,7 +169,7 @@ namespace Client.Forms
         protected override void OnPaint(PaintEventArgs pevent)
         {
             base.OnPaint(pevent);
-            GraphicsPath grPath = new GraphicsPath();
+            GraphicsPath grPath = new();
             grPath.AddRectangle(new Rectangle(0, 0, Width, Height));
             Region = new Region(grPath);
         }

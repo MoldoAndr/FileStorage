@@ -1,7 +1,7 @@
-# Aplicație de Transfer Securizat de Fișiere
+# Transfer Securizat de Fișiere
 
 ## Descriere
-Această aplicație este un sistem client-server de transfer de fișiere implementat în C# folosind Windows Forms pentru interfața client. 
+Sistem client-server de transfer de fișiere implementat în C# folosind Windows Forms pentru interfața client. 
 Oferă capacități securizate de încărcare, descărcare și gestionare a fișierelor utilizând Transport Layer Security (TLS) pentru comunicare criptată.
 
 ## Caracteristici
@@ -10,6 +10,9 @@ Oferă capacități securizate de încărcare, descărcare și gestionare a fiș
 - Descărcarea fișierelor de pe server
 - Ștergerea fișierelor de pe server
 - Listarea fișierelor stocate pe server
+- Partajarea fișierelor intre utilizatori
+- Redenumirea fisierelor de pe server
+- Vizualizarea continutului fisierelor de tip text in timp real de pe server
 - Criptare TLS pentru toată comunicarea client-server
 
 ## Componente
@@ -34,7 +37,7 @@ Oferă capacități securizate de încărcare, descărcare și gestionare a fiș
 - Implementarea curentă utilizează un certificat autosemnat pentru TLS.
 
 ## Îmbunătățiri Viitoare
-- Implementarea partajării de fișiere între utilizatori
 - Adăugarea controlului versiunilor pentru fișiere
-- Îmbunătățirea măsurilor de securitate (de exemplu, autentificare în doi factori)
+- Îmbunătățirea măsurilor de securitate
+- Modificare de fisiere in timp real
 - Dezvoltarea unei interfețe web pentru accesibilitate mai largă

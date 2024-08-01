@@ -55,7 +55,7 @@ namespace FileTransferClient.Forms
             btnClose.FlatStyle = FlatStyle.Flat;
             btnClose.FlatAppearance.BorderSize = 0;
             btnClose.Text = "×";
-            btnClose.Font = new Font("Arial", 12F, FontStyle.Bold);
+            btnClose.Font = new Font("Arial", 14F, FontStyle.Bold);
             btnClose.ForeColor = Color.White;
             btnClose.BackColor = Color.Transparent;
             btnClose.Click += new EventHandler(BtnClose_Click);

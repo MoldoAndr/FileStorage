@@ -12,7 +12,7 @@ namespace FileTransferClient.Forms
 
         public string Username { get; private set; }
         public string Password { get; private set; }
-        private string ServerIP = "192.169.0.190";
+        private string ServerIP = "192.168.0.190";
         private Button btnClose;
 
         public SignupForm()

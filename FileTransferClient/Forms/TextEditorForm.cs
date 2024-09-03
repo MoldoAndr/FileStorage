@@ -26,16 +26,18 @@ public partial class TextEditorForm : Form
         {
             Writer.Write("SAVE");
             Writer.Write(fileName);
+
             byte[] fileContentBytes = Encoding.UTF8.GetBytes(textBoxContent.Text);
+
             Writer.Write(fileContentBytes.Length);
+
             Writer.Write(fileContentBytes);
             Writer.Flush();
 
             bool saveSuccess = Reader.ReadBoolean();
             if (saveSuccess)
             {
-
-                ; ; 
+                MessageBox.Show("File saved successfully.");
             }
             else
             {

@@ -35,7 +35,7 @@ namespace FileTransferClient
                         using LoginForm loginForm = new();
                         if (loginForm.ShowDialog() == DialogResult.OK)
                         {
-                            Application.Run(new FileForm(loginForm.SslStream, loginForm.Reader, loginForm.Writer, loginForm.Username));
+                            Application.Run(new FileForm(loginForm.SslStream, loginForm.Reader, loginForm.Writer, loginForm.Username, loginForm.Password));
                         }
                     }
                     else

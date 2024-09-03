@@ -115,4 +115,49 @@ public static class UserManager
         }
         return false;
     }
+
+    public static byte[] GetUserEncryptionKey(string username)
+    {
+        string usersFilePath = Path.Combine(FileTransferServer.ServerRootDirectory, "Users", "users.txt");
+
+        if (!File.Exists(usersFilePath))
+        {
+            throw new FileNotFoundException("The users.txt file could not be found.");
+        }
+
+        string[] userLines = File.ReadAllLines(usersFilePath);
+        string hashedPassword = null;
+
+        foreach (string line in userLines)
+        {
+            string[] parts = line.Split(',');
+
+            if (parts.Length == 2 && parts[0] == username)
+            {
+                hashedPassword = parts[1];
+                break;
+            }
+        }
+
+        if (hashedPassword == null)
+        {
+            throw new Exception($"User '{username}' not found in users.txt.");
+        }
+
+        string combinedInput = username + hashedPassword;
+        byte[] key = HashToKey(combinedInput);
+
+        return key;
+    }
+
+    private static byte[] HashToKey(string input)
+    {
+        using (SHA256 sha256 = SHA256.Create())
+        {
+            byte[] hash = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+            return hash.Take(32).ToArray();
+        }
+    }
+
 }

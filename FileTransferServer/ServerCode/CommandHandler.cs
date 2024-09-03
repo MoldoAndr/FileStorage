@@ -10,7 +10,7 @@ public static class CommandHandler
             switch (command)
             {
                 case "UPLOAD":
-                    FileOperations.ReceiveFile(reader, userFolder);
+                    FileOperations.ReceiveFile(reader, userFolder, username);
                     break;
                 case "DOWNLOAD":
                     FileOperations.SendFile(reader, writer, userFolder);
@@ -25,7 +25,7 @@ public static class CommandHandler
                     FileOperations.ShareFile(reader, writer, username);
                     break;
                 case "VIEW":
-                    FileOperations.SendContent(reader,writer,userFolder);
+                    FileOperations.SendContent(reader,writer,userFolder, username);
                     break;
                 case "SEND":
                     FileOperations.FileSend(reader, writer, username);

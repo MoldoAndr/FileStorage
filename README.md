@@ -24,6 +24,9 @@ Sistem client-server de transfer de fișiere implementat în C# folosind Windows
   - La încărcarea unui fișier, acesta este criptat folosind cheia utilizatorului.
   - La descărcarea unui fișier, acesta este decriptat automat pentru a fi accesibil utilizatorului.
   - Fișierele partajate între utilizatori sunt criptate cu cheia destinatarului, asigurând că doar acesta poate decripta și accesa fișierele respective.
+- Bază de date:
+  -  SQL Server pentru gestionarea utilizatorilor și hash-urilor parolelor
+- Porturile pe care se realizează conexiunea sunt 8888 în cazul serverului mereu, iar în cazul clientului unul alocat dinamic care este stocat în fișier pentru o eventuală analiză a pachetelor.
 
 ## Note de Securitate
 - Implementarea curentă utilizează un certificat autosemnat pentru TLS.

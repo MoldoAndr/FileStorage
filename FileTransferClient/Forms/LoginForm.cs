@@ -131,6 +131,11 @@ namespace FileTransferClient.Forms
                 SslStream = new SslStream(client.GetStream(), false, new RemoteCertificateValidationCallback(ValidateServerCertificate), null);
                 SslStream.AuthenticateAsClient("FileTransferServer");
 
+                var localEndPoint = (System.Net.IPEndPoint)client.Client.LocalEndPoint;
+                string filePath = "../../../ClientPort/Port.txt";
+                string portInfo = $"{localEndPoint.Port}";
+                File.WriteAllText(filePath, portInfo);
+
                 Reader = new BinaryReader(SslStream);
                 Writer = new BinaryWriter(SslStream);
 

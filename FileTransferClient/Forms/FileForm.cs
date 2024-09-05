@@ -71,6 +71,10 @@
                 try
                 {
                     System.Net.Sockets.TcpClient client = new(ServerIp, Port);
+                    var localEndPoint = (System.Net.IPEndPoint)client.Client.LocalEndPoint;
+                    
+                    
+                
                     SslStream = new SslStream(client.GetStream(), false, new RemoteCertificateValidationCallback(ValidateServerCertificate), null);
                     SslStream.AuthenticateAsClient("FileTransferServer");
 

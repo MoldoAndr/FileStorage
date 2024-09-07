@@ -1555,11 +1555,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Andrei\\Documents\\FileStorage\\FileTransferServer\\FileTransferServer.csproj",
+      "projectUniqueName": "C:\\Users\\Andrei\\FileStorage\\FileTransferServer\\FileTransferServer.csproj",
       "projectName": "FileTransferServer",
-      "projectPath": "C:\\Users\\Andrei\\Documents\\FileStorage\\FileTransferServer\\FileTransferServer.csproj",
+      "projectPath": "C:\\Users\\Andrei\\FileStorage\\FileTransferServer\\FileTransferServer.csproj",
       "packagesPath": "C:\\Users\\Andrei\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Andrei\\Documents\\FileStorage\\FileTransferServer\\obj\\",
+      "outputPath": "C:\\Users\\Andrei\\FileStorage\\FileTransferServer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

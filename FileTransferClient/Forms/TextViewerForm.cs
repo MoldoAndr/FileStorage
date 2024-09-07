@@ -56,7 +56,7 @@ public partial class TextViewerForm : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show("Error: " + ex.Message);
+            
         }
     }
 

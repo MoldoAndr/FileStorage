@@ -56,10 +56,6 @@ public partial class TextViewerForm : Form
         }
         catch (Exception ex)
         {
-<<<<<<< HEAD
-=======
-            
->>>>>>> 26f87069918a9f76a376787a60eed6403ef5982e
         }
     }
 

@@ -27,6 +27,7 @@ Sistem client-server de transfer de fișiere implementat în C# folosind Windows
 - Bază de date:
   -  SQL Server pentru gestionarea utilizatorilor și hash-urilor parolelor
 - Porturile pe care se realizează conexiunea sunt 8888 în cazul serverului mereu, iar în cazul clientului unul alocat dinamic care este stocat în fișier pentru o eventuală analiză a pachetelor.
+- Adresa IP a serverului poate fi modificată din fișierul Server/IP.txt de către client
 
 ## Note de Securitate
 - Implementarea curentă utilizează un certificat autosemnat pentru TLS.

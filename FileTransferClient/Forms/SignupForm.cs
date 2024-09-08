@@ -12,11 +12,13 @@ namespace FileTransferClient.Forms
 
         public string Username { get; private set; }
         public string Password { get; private set; }
-        private string ServerIP = "192.168.0.190";
+        private string ServerIP;
         private Button btnClose;
 
         public SignupForm()
         {
+            string filePath = "../../../Server/IP.txt";
+            ServerIP = File.ReadAllText(filePath);
             InitializeComponent();
             StartPosition = FormStartPosition.CenterScreen;
             Paint += new PaintEventHandler(SetBackgroundGradient);
@@ -119,7 +121,9 @@ namespace FileTransferClient.Forms
         {
             try
             {
-                System.Net.Sockets.TcpClient client = new(this.ServerIP, 8888);
+                string PortPath = "../../../Server/Port.txt";
+                int Port = int.Parse(File.ReadAllText(PortPath));
+                System.Net.Sockets.TcpClient client = new(this.ServerIP, Port);
                 sslStream = new SslStream(client.GetStream(), false, new RemoteCertificateValidationCallback(ValidateServerCertificate), null);
                 sslStream.AuthenticateAsClient("FileTransferServer");
 

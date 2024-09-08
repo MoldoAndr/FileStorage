@@ -8,20 +8,30 @@
 
     namespace FileTransferClient.Forms
     {
-        public partial class FileForm : Form
-        {
-            private const int Port = 8888;
-            private const string ServerIp = "192.168.0.190";
+    public partial class FileForm : Form
+    {
+            private int Port { get; set; }
+            private string ServerIP { get; set; }
             private string Password { get; set; }
 
             public FileForm()
             {
+                string filePath = "../../../Server/IP.txt";
+                ServerIP = File.ReadAllText(filePath);
+                filePath = "../../../Server/Port.txt";
+                Port = int.Parse(File.ReadAllText(filePath));
+
                 InitializeComponent();
                 ConnectToServer();
             }
 
             public FileForm(SslStream sslStream, BinaryReader reader, BinaryWriter writer, string username, string password)
             {
+                string filePath = "../../../Server/IP.txt";
+                ServerIP = File.ReadAllText(filePath);
+                filePath = "../../../Server/Port.txt";
+                Port = int.Parse(File.ReadAllText(filePath));
+
                 Username = username;
                 Password = password;
                 InitializeComponent();
@@ -70,7 +80,9 @@
             {
                 try
                 {
-                    System.Net.Sockets.TcpClient client = new(ServerIp, Port);
+                    string filePath = "../../../Server/IP.txt";
+                    ServerIP = File.ReadAllText(filePath);
+                    System.Net.Sockets.TcpClient client = new(ServerIP, Port);
                     var localEndPoint = (System.Net.IPEndPoint)client.Client.LocalEndPoint;
                     
                     
